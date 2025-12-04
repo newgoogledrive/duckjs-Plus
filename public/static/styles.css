@@ -1,8 +1,0 @@
-body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #121212; color: #fff; }
-.container { text-align: center; padding: 2rem; }
-h1 { font-size: 3rem; color: #1DB954; margin: 0.5rem 0; }
-.subtitle { color: #aaa; margin-bottom: 2rem; }
-.browser-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-#urlInput { width: 60%; padding: 0.5rem 1rem; border-radius: 8px; border: none; font-size: 1rem; }
-#goButton { padding: 0.5rem 1rem; border: none; border-radius: 8px; background: #1DB954; color: #fff; font-size: 1rem; cursor: pointer; }
-#proxyFrame { margin-top: 1rem; width: 80%; height: 600px; border: none; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
