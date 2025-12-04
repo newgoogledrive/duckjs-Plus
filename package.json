@@ -1,14 +1,25 @@
 {
-  "name": "duckjs",
+  "name": "duckjs-plus-proxy",
   "version": "1.0.0",
-  "description": "DuckJS proxy (formally RCUI-Proxy) with sleek UI",
+  "description": "Simple browser-style web proxy for duckjs-Plus (experimental)",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
+  "keywords": [
+    "proxy",
+    "web-proxy",
+    "duckjs-Plus"
+  ],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "basic-auth": "^2.0.1",
+    "cheerio": "^1.0.0-rc.12",
     "express": "^4.18.2",
-    "http-proxy": "^1.18.1"
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
