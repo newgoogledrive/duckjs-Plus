@@ -1,0 +1,14 @@
+{
+  "name": "duckjs",
+  "version": "1.0.0",
+  "description": "DuckJS proxy (formally RCUI-Proxy) with sleek UI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "basic-auth": "^2.0.1",
+    "express": "^4.18.2",
+    "http-proxy": "^1.18.1"
+  }
+}
