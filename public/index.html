@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>duckjs</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="icon" href="favicon.ico">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>duckjs-Plus — Proxy Browser</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div class="container">
-    <img src="assets/logo.png" alt="DuckJS Logo" class="logo">
-    <h1>duckjs</h1>
-    <p class="subtitle">formally RCUI-Proxy</p>
-
-    <div class="proxy-form">
-        <input type="text" id="url" placeholder="Enter a URL to browse" />
-        <button id="goBtn">Go</button>
+  <header class="topbar">
+    <div class="logo-wrap">
+      <!-- inline SVG logo so it always appears -->
+      <svg id="logo" width="36" height="36" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="#111827"></circle>
+        <text x="12" y="16" font-family="monospace" font-size="10" text-anchor="middle" fill="#fff">D+</text>
+      </svg>
+      <h1>duckjs-Plus</h1>
     </div>
 
-    <iframe id="proxyFrame" sandbox="allow-scripts allow-same-origin"></iframe>
-</div>
+    <form id="nav" onsubmit="return go();">
+      <input id="url" type="text" placeholder="https://example.com" />
+      <button type="submit">Go</button>
+      <button id="open-new" type="button">Open in new tab</button>
+    </form>
+  </header>
 
-<script src="app.js"></script>
+  <main class="main">
+    <iframe id="viewer" src="/proxy?url=https%3A%2F%2Fexample.com" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" frameborder="0"></iframe>
+  </main>
+
+  <script src="/app.js"></script>
 </body>
 </html>
