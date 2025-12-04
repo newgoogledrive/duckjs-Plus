@@ -24,17 +24,25 @@ html,body {
 }
 
 .logo-wrap {
-  display:flex;
-  align-items:center;
-  gap:8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .logo-wrap h1 {
-  font-size:16px;
-  margin:0;
-  font-weight:600;
-  letter-spacing:0.6px;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.6px;
 }
+
+/* NEW — for your PNG logo */
+.logo-img {
+  height: 36px;
+  width: 36px;
+  object-fit: contain;
+}
+
 
 #nav {
   margin-left:auto;
