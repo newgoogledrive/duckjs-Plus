@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DuckJS</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico">
+</head>
+<body>
+<div class="container">
+    <img src="assets/logo.png" alt="DuckJS Logo" class="logo">
+    <h1>DuckJS</h1>
+    <p class="subtitle">formally RCUI-Proxy</p>
+
+    <div class="proxy-form">
+        <input type="text" id="url" placeholder="Enter a URL to browse" />
+        <button id="goBtn">Go</button>
+    </div>
+
+    <iframe id="proxyFrame" sandbox="allow-scripts allow-same-origin"></iframe>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
