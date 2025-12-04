@@ -1,42 +1,40 @@
 const express = require('express');
-const httpProxy = require('http-proxy');
-const basicAuth = require('basic-auth');
-const path = require('path');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-const proxy = httpProxy.createProxyServer({});
+const PORT = process.env.PORT || 3000;
 
-// === CONFIG VARIABLES ===
-const PORT = process.env.PORT || 10000;
-const DUCKJS_USER = process.env.DUCKJS_USER || 'duckadmin';
-const DUCKJS_PASS = process.env.DUCKJS_PASS || 'password';
+// For simple UI or index page (optional)
+// app.use(express.static('public'));
 
-// === PASSWORD PROTECTION ===
-app.use((req, res, next) => {
-    const user = basicAuth(req);
-    if (!user || user.name !== DUCKJS_USER || user.pass !== DUCKJS_PASS) {
-        res.set('WWW-Authenticate', 'Basic realm="DuckJS Proxy"');
-        return res.status(401).send('Authentication required.');
-    }
-    next();
+// Proxy any request under /proxy/*
+app.use('/proxy', (req, res, next) => {
+  // extract target URL from query param, e.g. /proxy/?url=https://example.com
+  const targetUrl = req.query.url;
+  if (!targetUrl) {
+    res.status(400).send('Missing url parameter');
+    return;
+  }
+
+  // Create a proxy middleware instance on the fly
+  createProxyMiddleware({
+    target: targetUrl,
+    changeOrigin: true,
+    selfHandleResponse: false,  
+    onProxyReq(proxyReq, req, res) {
+      // optional: adjust headers here (User-Agent, Accept, etc.)
+    },
+    onProxyRes(proxyRes, req, res) {
+      // Remove content-length / compression headers if you want to rewrite response, or adjust CSP
+      delete proxyRes.headers['content-length'];
+    },
+    pathRewrite: (path, req) => {
+      // remove the /proxy prefix
+      return path.replace(/^\/proxy/, '');
+    },
+  })(req, res, next);
 });
 
-// === SERVE DUCKJS FRONTEND ===
-app.use('/', express.static(path.join(__dirname, 'public')));
-
-// === SIMPLE HTTP PROXY ===
-app.all('/proxy/*', (req, res) => {
-    const targetUrl = decodeURIComponent(req.url.replace(/^\/proxy\//, ''));
-    if (!targetUrl.startsWith('http')) {
-        return res.status(400).send('Invalid URL');
-    }
-    proxy.web(req, res, { target: targetUrl, changeOrigin: true }, (err) => {
-        console.error('Proxy error:', err.message);
-        res.status(500).send('Proxy error');
-    });
-});
-
-// === START SERVER ===
 app.listen(PORT, () => {
-    console.log(`DuckJS Proxy running on port ${PORT}`);
+  console.log(`Proxy server running on port ${PORT}`);
 });
