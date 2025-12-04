@@ -14,11 +14,15 @@
   <h1>duckjs</h1>
 </div>
 
-    <form id="nav" onsubmit="return go();">
-      <input id="url" type="text" placeholder="https://example.com" />
-      <button type="submit">Go</button>
-      <button id="open-new" type="button">Open in new tab</button>
-    </form>
+    <form onsubmit="event.preventDefault(); window.location.href = '/uv/' + __uv$config.encodeUrl(urlInput.value)">
+  <input id="urlInput" placeholder="Enter URL">
+  <button type="submit">Go</button>
+</form>
+
+<script src="/uv/uv.bundle.js"></script>
+<script src="/uv/uv.config.js"></script>
+<script src="/uv/uv.sw.js"></script>
+
   </header>
 
   <main class="main">

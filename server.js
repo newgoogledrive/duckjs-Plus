@@ -10,7 +10,35 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Serve your UI and assets
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve your UI and assets — FIXED VERSION
+app.use(express.static(path.join(__dirname, 'public'), {
+  fallthrough: true
+}));
+app.use("/uv/", express.static(path.join(__dirname, "node_modules/@titaniumnetwork-dev/ultraviolet/dist")));
+import { UVService } from "@titaniumnetwork-dev/ultraviolet/dist/uv.service";
+import { rewriteRequest, rewriteResponse } from "@titaniumnetwork-dev/ultraviolet/dist/uv.rewriter";
+
+const uv = new UVService();
+
+// main proxy route
+app.all("/uv/service/:encodedUrl", async (req, res) => {
+  try {
+    const url = uv.decodeUrl(req.params.encodedUrl);
+    const rewrittenReq = await rewriteRequest(req, url, uv);
+
+    const fetchRes = await fetch(rewrittenReq.url, rewrittenReq);
+
+    const rewrittenRes = await rewriteResponse(fetchRes, rewrittenReq, uv);
+
+    rewrittenRes.headers.forEach((v, k) => res.setHeader(k, v));
+
+    const body = rewrittenRes.body ? Buffer.from(await rewrittenRes.arrayBuffer()) : null;
+
+    res.status(rewrittenRes.status).send(body);
+  } catch (err) {
+    res.status(500).send("Proxy Error: " + err);
+  }
+});
 
 // Utility: build absolute URL from base + relative
 function resolveUrl(base, relative) {
